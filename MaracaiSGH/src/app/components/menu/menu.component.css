@@ -1,0 +1,17 @@
+#sidebar {
+    width: 100%;
+    margin-right: 0px;
+    height: 100vh;
+    background-color: #ebfff9;
+  }
+
+.nav-item {
+    border: 1.5px solid black;
+    padding: 10px ;
+}
+  
+.nav-item:hover {
+    background-color: #b3ffe6;
+    cursor: pointer;
+}
+  

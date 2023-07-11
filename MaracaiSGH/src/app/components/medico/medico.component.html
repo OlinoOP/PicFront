@@ -1,0 +1,110 @@
+<h2>Médicos</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>CRM</th>
+      <th>Telefone</th>
+      <th>Usuário</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let medico of medicos">
+      <td>{{ medico.id }}</td>
+      <td>{{ medico.crm }}</td>
+      <td>{{ medico.telefone }}</td>
+      <td>{{ medico.usuario.nome }}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditarMedico" (click)="preparaEdicao(medico)">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluirMedico" (click)="preparaEdicao(medico)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Botão trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdicionarMedico">
+  Adicionar Médico
+</button>
+
+<!-- Modal Adicionar Médico -->
+<div class="modal fade" id="modalAdicionarMedico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Adicionar Novo Médico</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="adicionarMedico()">
+          <div class="form-group">
+            <label for="crm" class="form-label">CRM:</label>
+            <input name="crm" type="text" class="form-control" id="crmAd" [(ngModel)]="novoMedico.crm" required>
+          </div>
+          <div class="form-group">
+            <label for="telefone" class="form-label">Telefone:</label>
+            <input name="telefone" type="text" class="form-control" id="telefoneAd" [(ngModel)]="novoMedico.telefone" required>
+          </div>
+          <div class="form-group">
+            <label for="usuario" class="form-label">Usuário:</label>
+            <select id="usuarioAd" class="form-control form-select" [(ngModel)]="novoMedico.usuario" name="usuario">
+              <option *ngFor="let usuario of usuarios" [value]="usuario">{{ usuario.nome }}</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Médico -->
+<div class="modal fade" id="modalEditarMedico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Médico</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="editarMedico(novoMedico)">
+          <div class="form-group">
+            <label for="crm" class="form-label">CRM:</label>
+            <input name="crm" type="text" class="form-control" id="crmEd" [(ngModel)]="novoMedico.crm" required>
+          </div>
+          <div class="form-group">
+            <label for="telefone" class="form-label">Telefone:</label>
+            <input name="telefone" type="text" class="form-control" id="telefoneEd" [(ngModel)]="novoMedico.telefone" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Editar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Excluir Médico -->
+<div class="modal fade" id="modalExcluirMedico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir Médico</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir o Médico selecionado?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="excluirMedico(novoMedico)">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>

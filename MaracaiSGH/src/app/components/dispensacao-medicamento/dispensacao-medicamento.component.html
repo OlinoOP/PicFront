@@ -1,0 +1,28 @@
+<h2>Dispensações de Medicamentos</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Data de Dispensação</th>
+      <th>Quantidade Dispensada</th>
+      <th>Medicamento</th>
+      <th>Lote</th>
+      <th>Usuário</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let dispensacao of dispensacoes">
+      <td>{{ dispensacao.id }}</td>
+      <td>{{ dispensacao.dataDispensacao }}</td>
+      <td>{{ dispensacao.quantidadeDispensada }}</td>
+      <td>{{ dispensacao.estoqueMedicamento.medicamento.nomeComercial }}</td>
+      <td>{{ dispensacao.estoqueMedicamento.lote }}</td>
+      <td>{{ dispensacao.usuario.nome }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button routerLink="/estoquemed" style="margin-left: 10px;" type="button" class="btn btn-danger">
+    Voltar
+  </button>

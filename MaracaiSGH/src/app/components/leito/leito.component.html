@@ -1,0 +1,114 @@
+<h2>Leitos</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Número da Sala</th>
+      <th>Disponibilidade</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let leito of leitos">
+      <td>{{ leito.id }}</td>
+      <td>{{ leito.numeroSala }}</td>
+      <td>{{ leito.disponibilidade ? 'Disponível' : 'Indisponível' }}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditarLeito" (click)="preparaEdicao(leito)">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluirLeito" (click)="preparaExclusao(leito)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Botão trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdicionarLeito">
+  Adicionar Leito
+</button>
+
+<button routerLink="/internacao" style="margin-left: 10px;" type="button" class="btn btn-danger">
+    Voltar
+  </button>
+
+<!-- Modal Adicionar Leito -->
+<div class="modal fade" id="modalAdicionarLeito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Adicionar Novo Leito</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="adicionarLeito()">
+          <div class="form-group">
+            <label for="numeroSala" class="form-label">Número da Sala:</label>
+            <input name="numeroSala" type="number" class="form-control" id="numeroSalaAd" [(ngModel)]="novoLeito.numeroSala" required>
+          </div>
+          <div class="form-group">
+            <label for="disponibilidade" class="form-label">Disponibilidade:</label>
+            <select id="disponibilidadeAd" class="form-control form-select" [(ngModel)]="novoLeito.disponibilidade" name="disponibilidade">
+              <option value="true">Disponível</option>
+              <option value="false">Indisponível</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Leito -->
+<div class="modal fade" id="modalEditarLeito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Leito</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="numeroSala" class="form-label">Número da Sala:</label>
+            <input name="numeroSala" type="number" class="form-control" id="numeroSalaEd" [(ngModel)]="novoLeito.numeroSala" required>
+          </div>
+          <div class="form-group">
+            <label for="disponibilidade" class="form-label">Disponibilidade:</label>
+            <select id="disponibilidadeEd" class="form-control form-select" [(ngModel)]="novoLeito.disponibilidade" name="disponibilidade">
+              <option value="true">Disponível</option>
+              <option value="false">Indisponível</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="editarLeito()">Editar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Excluir Leito -->
+<div class="modal fade" id="modalExcluirLeito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir Leito</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <p>Tem certeza que deseja excluir o Leito selecionado?</p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="excluirLeito(novoLeito)">Excluir</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+

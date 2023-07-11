@@ -1,0 +1,126 @@
+<h2>Usuários</h2>
+
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Permissão</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usuario of usuarios">
+      <td>{{ usuario.id }}</td>
+      <td>{{ usuario.nome }}</td>
+      <td>{{ usuario.cpf }}</td>
+      <td>{{ usuario.permissao }}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario" (click)="preparaEdicao(usuario)">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluirUsuario" (click)="preparaExclusao(usuario)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Botão trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdicionarUsuario">
+  Adicionar Usuário
+</button>
+
+<!-- Modal Adicionar Usuario -->
+<div class="modal fade" id="modalAdicionarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Adicionar Novo Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="adicionarUsuario()">
+          <div class="form-group">
+            <label for="nome" class="form-label">Nome:</label>
+            <input name="nome" type="text" class="form-control" id="nomeAd" [(ngModel)]="novoUsuario.nome" required>
+          </div>
+          <div class="form-group">
+            <label for="cpf" class="form-label">CPF:</label>
+            <input name="cpf" type="text" class="form-control" id="cpfAd" [(ngModel)]="novoUsuario.cpf" required>
+          </div>
+          <div class="form-group">
+            <label for="senha" class="form-label">Senha:</label>
+            <input name="senha" type="password" class="form-control" id="senhaAd" [(ngModel)]="novoUsuario.senha" required>
+          </div>
+          <div class="form-group">
+            <label for="permissao" class="form-label">Permissão:</label>
+            <select id="permissaoAd" class="form-control form-select" [(ngModel)]="novoUsuario.permissao" name="permissao">
+              <option value="1">Administrador</option>
+              <option value="3">Enfermeira</option>
+              <option value="4">Farmaceutica</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Usuario -->
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="nome" class="form-label">Nome:</label>
+            <input name="nome" type="text" class="form-control" id="nomeEd" [(ngModel)]="novoUsuario.nome" required>
+          </div>
+          <div class="form-group">
+            <label for="cpf" class="form-label">CPF:</label>
+            <input name="cpf" type="text" class="form-control" id="cpfEd" [(ngModel)]="novoUsuario.cpf" required>
+          </div>
+          <div class="form-group">
+            <label for="permissao" class="form-label">Permissão:</label>
+            <select id="permissaoEd" class="form-control form-select" [(ngModel)]="novoUsuario.permissao" name="permissao">
+              <option value="1">Administrador</option>
+              <option value="3">Enfermeira</option>
+              <option value="4">Farmaceutica</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="editarUsuario()">Editar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Excluir Usuario -->
+<div class="modal fade" id="modalExcluirUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <p>Tem certeza que deseja excluir o Usuario selecionado?</p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"  (click)="excluirUsuario(novoUsuario)">Excluir</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

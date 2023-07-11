@@ -1,0 +1,21 @@
+.navbar {
+  background-color: #d2fef4;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+  color: #333;
+  font-weight: bold;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #000;
+}
+
+.hm{
+    max-width: 50%;
+    height: auto;
+}

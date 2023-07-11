@@ -1,0 +1,134 @@
+<h2>Estoque de Medicamentos</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Medicamento</th>
+      <th>Quantidade</th>
+      <th>Data de Validade</th>
+      <th>Lote</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of estoqueMedicamentos">
+      <td>{{ item.id }}</td>
+      <td>{{ item.medicamento.nomeComercial }}</td>
+      <td>{{ item.quantidade }}</td>
+      <td>{{ item.dataValidade }}</td>
+      <td>{{ item.lote }}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditarEstoque" (click)="preparaEdicao(item)">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluirEstoque" (click)="preparaExclusao(item)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Botão trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdicionarEstoque">
+  Adicionar Item
+</button>
+
+<button routerLink="/dispensacaomed" style="margin-left: 10px;" type="button" class="btn btn-primary">
+    Dispensacao Medicamento
+  </button>
+
+<button routerLink="/medicamento" style="margin-left: 10px;" type="button" class="btn btn-danger">
+    Voltar
+  </button>
+
+<!-- Modal Adicionar Estoque -->
+<div class="modal fade" id="modalAdicionarEstoque" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Adicionar Novo Item no Estoque</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="adicionarEstoqueMedicamento()">
+          <div class="form-group">
+            <label for="medicamento" class="form-label">Medicamento:</label>
+            <select id="medicamentoAd" class="form-control form-select" [(ngModel)]="novoEstoqueMedicamento.medicamento" name="medicamento">
+              <option *ngFor="let medicamento of medicamentos" [value]="medicamento">{{ medicamento.nomeComercial }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="quantidade" class="form-label">Quantidade:</label>
+            <input name="quantidade" type="number" class="form-control" id="quantidadeAd" [(ngModel)]="novoEstoqueMedicamento.quantidade" required>
+          </div>
+          <div class="form-group">
+            <label for="dataValidade" class="form-label">Data de Validade:</label>
+            <input name="dataValidade" type="date" class="form-control" id="dataValidadeAd" [(ngModel)]="novoEstoqueMedicamento.dataValidade" required>
+          </div>
+          <div class="form-group">
+            <label for="lote" class="form-label">Lote:</label>
+            <input name="lote" type="text" class="form-control" id="loteAd" [(ngModel)]="novoEstoqueMedicamento.lote" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Estoque -->
+<div class="modal fade" id="modalEditarEstoque" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Item do Estoque</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="medicamento" class="form-label">Medicamento:</label>
+            <select id="medicamentoEd" class="form-control form-select" [(ngModel)]="novoEstoqueMedicamento.medicamento" name="medicamento">
+              <option *ngFor="let medicamento of medicamentos" [value]="medicamento">{{ medicamento.nomeComercial }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="quantidade" class="form-label">Quantidade:</label>
+            <input name="quantidade" type="number" class="form-control" id="quantidadeEd" [(ngModel)]="novoEstoqueMedicamento.quantidade" required>
+          </div>
+          <div class="form-group">
+            <label for="dataValidade" class="form-label">Data de Validade:</label>
+            <input name="dataValidade" type="date" class="form-control" id="dataValidadeEd" [ngModel]="novoEstoqueMedicamento.dataValidade | date:'dd-MM-yyyy'" required>
+          </div>
+          <div class="form-group">
+            <label for="lote" class="form-label">Lote:</label>
+            <input name="lote" type="text" class="form-control" id="loteEd" [(ngModel)]="novoEstoqueMedicamento.lote" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="editarEstoqueMedicamento()">Editar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Excluir Estoque -->
+<div class="modal fade" id="modalExcluirEstoque" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir Item do Estoque</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <p>Tem certeza que deseja excluir o item do estoque selecionado?</p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="excluirEstoqueMedicamento(novoEstoqueMedicamento)">Excluir</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,148 @@
+<h2>Exames Solicitados</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Descrição</th>
+      <th>Data da Solicitação</th>
+      <th>Exame</th>
+      <th>Paciente</th>
+      <th>Médico</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let exameSolicitado of examesSolicitados">
+      <td>{{ exameSolicitado.id }}</td>
+      <td>{{ exameSolicitado.descricao }}</td>
+      <td>{{ exameSolicitado.dataExame }}</td>
+      <td>{{ exameSolicitado.exame.descricao }}</td>
+      <td>{{ exameSolicitado.paciente.nome }}</td>
+      <td>{{ exameSolicitado.medico.usuario.nome }}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditarExameSolicitado" (click)="preparaEdicao(exameSolicitado)">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluirExameSolicitado" (click)="preparaExclusao(exameSolicitado)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Botão trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdicionarExameSolicitado">
+  Adicionar Exame Solicitado
+</button>
+
+<button routerLink="/exame" style="margin-left: 10px;" type="button" class="btn btn-primary">
+    Cadastro de Exames
+  </button>
+
+<!-- Modal para adicionar exame solicitado -->
+<div class="modal fade" id="modalAdicionarExameSolicitado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Adicionar Novo Exame Solicitado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (submit)="adicionarExameSolicitado()">
+            <div class="form-group">
+              <label for="descricao" class="form-label">Descrição:</label>
+              <input name="descricao" type="text" class="form-control" id="descricaoAd" [(ngModel)]="novoExameSolicitado.descricao" required>
+            </div>
+            <div class="form-group">
+              <label for="dataExame" class="form-label">Data do Exame:</label>
+              <input name="dataExame" type="date" class="form-control" id="dataExameAd" [(ngModel)]="novoExameSolicitado.dataExame" required>
+            </div>
+            <div class="form-group">
+              <label for="exame" class="form-label">Exame:</label>
+              <select id="exameAd" class="form-control form-select" [(ngModel)]="novoExameSolicitado.exame" name="exame" required>
+                <option *ngFor="let exame of exames" [value]="exame">{{ exame.descricao }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="paciente" class="form-label">Paciente:</label>
+              <select id="pacienteAd" class="form-control form-select" [(ngModel)]="novoExameSolicitado.paciente" name="paciente" required>
+                <option *ngFor="let paciente of pacientes"  [value]="paciente">{{ paciente.nome }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="medico" class="form-label">Médico:</label>
+              <select id="medicoAd" class="form-control form-select" [(ngModel)]="novoExameSolicitado.medico" name="medico" required>
+                <option *ngFor="let medico of medicos"  [value]="medico">{{ medico.usuario.nome }}</option>
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-success">Adicionar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal para editar exame solicitado -->
+  <div class="modal fade" id="modalEditarExameSolicitado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Editar Exame Solicitado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="descricao" class="form-label">Descrição:</label>
+              <input name="descricao" type="text" class="form-control" id="descricaoEd" [(ngModel)]="novoExameSolicitado.descricao" required>
+            </div>
+            <div class="form-group">
+              <label for="dataExame" class="form-label">Data do Exame:</label>
+              <input name="dataExame" type="date" class="form-control" id="dataExameEd" [(ngModel)]="novoExameSolicitado.dataExame" required>
+            </div>
+            <div class="form-group">
+              <label for="exame" class="form-label">Exame:</label>
+              <select id="exameEd" class="form-control form-select" [(ngModel)]="novoExameSolicitado.exame" name="exame" required>
+                <option *ngFor="let exame of exames" [value]="exame">{{ exame.descricao }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="paciente" class="form-label">Paciente:</label>
+              <select id="pacienteEd" class="form-control form-select" [(ngModel)]="novoExameSolicitado.paciente" name="paciente" required>
+                <option *ngFor="let paciente of pacientes" [value]="paciente">{{ paciente.nome }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="medico" class="form-label">Médico:</label>
+              <select id="medicoEd" class="form-control form-select" [(ngModel)]="novoExameSolicitado.medico" name="medico" required>
+                <option *ngFor="let medico of medicos" [value]="medico">{{ medico.usuario.nome }}</option>
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="editarExameSolicitado()">Editar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal Excluir ExameSolicitado -->
+<div class="modal fade" id="modalExcluirExameSolicitado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir Exame Solicitado</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <p>Tem certeza que deseja excluir o Exame Solicitado selecionado?</p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"  (click)="excluirExameSolicitado(novoExameSolicitado)">Excluir</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

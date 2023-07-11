@@ -1,0 +1,143 @@
+<h2>Internações</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Data de Entrada</th>
+      <th>Data de Saída</th>
+      <th>Diagnóstico</th>
+      <th>Leito</th>
+      <th>Médico</th>
+      <th>Paciente</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let internacao of internacoes">
+      <td>{{ internacao.id }}</td>
+      <td>{{ internacao.dataEntrada }}</td>
+      <td>{{ internacao.dataSaida }}</td>
+      <td>{{ internacao.diagnostico }}</td>
+      <td>{{ internacao.leito.numeroSala }}</td>
+      <td>{{ internacao.medico.usuario.nome }}</td>
+      <td>{{ internacao.paciente.nome }}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditarInternacao" (click)="preparaEdicao(internacao)">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluirInternacao" (click)="preparaExclusao(internacao)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Botão trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdicionarInternacao">
+  Adicionar Internação
+</button>
+
+<button routerLink="/leito" style="margin-left: 10px;" type="button" class="btn btn-primary">
+    Cadastro de Leitos
+  </button>
+
+<!-- Modal Adicionar Internação -->
+<div class="modal fade" id="modalAdicionarInternacao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Adicionar Nova Internação</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="adicionarInternacao()">
+          <div class="form-group">
+            <label for="diagnostico" class="form-label">Diagnóstico:</label>
+            <input name="diagnostico" type="text" class="form-control" id="diagnosticoAd" [(ngModel)]="novaInternacao.diagnostico" required>
+          </div>
+          <div class="form-group">
+            <label for="leito" class="form-label">Leito:</label>
+            <select name="leito" class="form-control" id="leitoAd" [(ngModel)]="novaInternacao.leito.numeroSala" required>
+              <option *ngFor="let leito of leitos" [value]="leito">{{ leito.numeroSala }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="medico" class="form-label">Médico:</label>
+            <select name="medico" class="form-control" id="medicoAd" [(ngModel)]="novaInternacao.medico.usuario.nome" required>
+              <option *ngFor="let medico of medicos" [value]="medico">{{ medico.usuario.nome }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="paciente" class="form-label">Paciente:</label>
+            <select name="paciente" class="form-control" id="pacienteAd" [(ngModel)]="novaInternacao.paciente.nome" required>
+              <option *ngFor="let paciente of pacientes" [value]="paciente">{{ paciente.nome }}</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Internação -->
+<div class="modal fade" id="modalEditarInternacao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Internação</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="diagnostico" class="form-label">Diagnóstico:</label>
+            <input name="diagnostico" type="text" class="form-control" id="diagnosticoEd" [(ngModel)]="novaInternacao.diagnostico" required>
+          </div>
+          <div class="form-group">
+            <label for="leito" class="form-label">Leito:</label>
+            <select name="leito" class="form-control" id="leitoEd" [(ngModel)]="novaInternacao.leito.numeroSala" required>
+              <option *ngFor="let leito of leitos" [value]="leito">{{ leito.numeroSala }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="medico" class="form-label">Médico:</label>
+            <select name="medico" class="form-control" id="medicoEd" [(ngModel)]="novaInternacao.medico.usuario.nome" required>
+              <option *ngFor="let medico of medicos" [value]="medico">{{ medico.usuario.nome }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="paciente" class="form-label">Paciente:</label>
+            <select name="paciente" class="form-control" id="pacienteEd" [(ngModel)]="novaInternacao.paciente.nome" required>
+              <option *ngFor="let paciente of pacientes" [value]="paciente">{{ paciente.nome }}</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="editarInternacao()">Editar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Excluir Internação -->
+<div class="modal fade" id="modalExcluirInternacao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir Internação</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <p>Tem certeza que deseja excluir a Internação selecionada?</p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"  (click)="excluirInternacao(novaInternacao)">Excluir</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,136 @@
+<h2>Medicamentos</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome Comercial</th>
+      <th>Nome Genérico</th>
+      <th>Fabricante</th>
+      <th>Concentração</th>
+      <th>Unidade de Medida</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let medicamento of medicamentos">
+      <td>{{ medicamento.id }}</td>
+      <td>{{ medicamento.nomeComercial }}</td>
+      <td>{{ medicamento.nomeGenerico }}</td>
+      <td>{{ medicamento.fabricante }}</td>
+      <td>{{ medicamento.concentracao }}</td>
+      <td>{{ medicamento.unidadeMedida }}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditarMedicamento" (click)="preparaEdicao(medicamento)">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluirMedicamento" (click)="preparaExclusao(medicamento)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Botão para abrir o modal de adicionar -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdicionarMedicamento">
+  Adicionar Medicamento
+</button>
+
+<button routerLink="/estoquemed" style="margin-left: 10px;" type="button" class="btn btn-primary">
+  Estoque de Medicamentos
+</button>
+
+<!-- Modal Adicionar Medicamento -->
+<div class="modal fade" id="modalAdicionarMedicamento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Adicionar Novo Medicamento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="adicionarMedicamento()">
+          <div class="form-group">
+            <label for="nomeComercial" class="form-label">Nome Comercial:</label>
+            <input name="nomeComercial" type="text" class="form-control" id="nomeComercialAd" [(ngModel)]="novoMedicamento.nomeComercial" required>
+          </div>
+          <div class="form-group">
+            <label for="nomeGenerico" class="form-label">Nome Genérico:</label>
+            <input name="nomeGenerico" type="text" class="form-control" id="nomeGenericoAd" [(ngModel)]="novoMedicamento.nomeGenerico" required>
+          </div>
+          <div class="form-group">
+            <label for="fabricante" class="form-label">Fabricante:</label>
+            <input name="fabricante" type="text" class="form-control" id="fabricanteAd" [(ngModel)]="novoMedicamento.fabricante" required>
+          </div>
+          <div class="form-group">
+            <label for="concentracao" class="form-label">Concentração:</label>
+            <input name="concentracao" type="text" class="form-control" id="concentracaoAd" [(ngModel)]="novoMedicamento.concentracao" required>
+          </div>
+          <div class="form-group">
+            <label for="unidadeMedida" class="form-label">Unidade de Medida:</label>
+            <input name="unidadeMedida" type="text" class="form-control" id="unidadeMedidaAd" [(ngModel)]="novoMedicamento.unidadeMedida" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Medicamento -->
+<div class="modal fade" id="modalEditarMedicamento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Medicamento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form >
+          <div class="form-group">
+            <label for="nomeComercial" class="form-label">Nome Comercial:</label>
+            <input name="nomeComercial" type="text" class="form-control" id="nomeComercialEd" [(ngModel)]="novoMedicamento.nomeComercial" required>
+          </div>
+          <div class="form-group">
+            <label for="nomeGenerico" class="form-label">Nome Genérico:</label>
+            <input name="nomeGenerico" type="text" class="form-control" id="nomeGenericoEd" [(ngModel)]="novoMedicamento.nomeGenerico" required>
+          </div>
+          <div class="form-group">
+            <label for="fabricante" class="form-label">Fabricante:</label>
+            <input name="fabricante" type="text" class="form-control" id="fabricanteEd" [(ngModel)]="novoMedicamento.fabricante" required>
+          </div>
+          <div class="form-group">
+            <label for="concentracao" class="form-label">Concentração:</label>
+            <input name="concentracao" type="text" class="form-control" id="concentracaoEd" [(ngModel)]="novoMedicamento.concentracao" required>
+          </div>
+          <div class="form-group">
+            <label for="unidadeMedida" class="form-label">Unidade de Medida:</label>
+            <input name="unidadeMedida" type="text" class="form-control" id="unidadeMedidaEd" [(ngModel)]="novoMedicamento.unidadeMedida" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="editarMedicamento()">Editar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Excluir Medicamento -->
+<div class="modal fade" id="modalExcluirMedicamento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Deseja realmente excluir o medicamento {{ novoMedicamento.nomeComercial }}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="excluirMedicamento(novoMedicamento)">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,165 @@
+<h2>Pacientes</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Data de Nascimento</th>
+      <th>CPF</th>
+      <th>Sexo</th>
+      <th>Endereço</th>
+      <th>Cidade</th>
+      <th>Estado</th>
+      <th>Telefone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let paciente of pacientes">
+      <td>{{ paciente.id }}</td>
+      <td>{{ paciente.nome }}</td>
+      <td>{{ paciente.dataNascimento }}</td>
+      <td>{{ paciente.cpf }}</td>
+      <td>{{ paciente.sexo }}</td>
+      <td>{{ paciente.endereco }}</td>
+      <td>{{ paciente.cidade }}</td>
+      <td>{{ paciente.estado }}</td>
+      <td>{{ paciente.telefone }}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditarPaciente" (click)="preparaEdicao(paciente)">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluirPaciente" (click)="preparaExclusao(paciente)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Botão trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdicionarPaciente">
+  Adicionar Paciente
+</button>
+
+<!-- Modal Adicionar Paciente -->
+<div class="modal fade" id="modalAdicionarPaciente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Adicionar Novo Paciente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="adicionarPaciente()">
+          <div class="form-group">
+            <label for="nome" class="form-label">Nome:</label>
+            <input name="nome" type="text" class="form-control" id="nomeAd" [(ngModel)]="novoPaciente.nome" required>
+          </div>
+          <div class="form-group">
+            <label for="dataNascimento" class="form-label">Data de Nascimento:</label>
+            <input name="dataNascimento" type="text" class="form-control" id="dataNascimentoAd" [(ngModel)]="novoPaciente.dataNascimento" required>
+          </div>
+          <div class="form-group">
+            <label for="cpf" class="form-label">CPF:</label>
+            <input name="cpf" type="text" class="form-control" id="cpfAd" [(ngModel)]="novoPaciente.cpf" required>
+          </div>
+          <div class="form-group">
+            <label for="sexo" class="form-label">Sexo:</label>
+            <input name="sexo" type="text" class="form-control" id="sexoAd" [(ngModel)]="novoPaciente.sexo" required>
+          </div>
+          <div class="form-group">
+            <label for="endereco" class="form-label">Endereço:</label>
+            <input name="endereco" type="text" class="form-control" id="enderecoAd" [(ngModel)]="novoPaciente.endereco" required>
+          </div>
+          <div class="form-group">
+            <label for="cidade" class="form-label">Cidade:</label>
+            <input name="cidade" type="text" class="form-control" id="cidadeAd" [(ngModel)]="novoPaciente.cidade" required>
+          </div>
+          <div class="form-group">
+            <label for="estado" class="form-label">Estado:</label>
+            <input name="estado" type="text" class="form-control" id="estadoAd" [(ngModel)]="novoPaciente.estado" required>
+          </div>
+          <div class="form-group">
+            <label for="telefone" class="form-label">Telefone:</label>
+            <input name="telefone" type="text" class="form-control" id="telefoneAd" [(ngModel)]="novoPaciente.telefone" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Paciente -->
+<div class="modal fade" id="modalEditarPaciente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Paciente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form >
+          <div class="form-group">
+            <label for="nome" class="form-label">Nome:</label>
+            <input name="nome" type="text" class="form-control" id="nomeEd" [(ngModel)]="novoPaciente.nome" required>
+          </div>
+          <div class="form-group">
+            <label for="dataNascimento" class="form-label">Data de Nascimento:</label>
+            <input name="dataNascimento" type="text" class="form-control" id="dataNascimentoEd" [(ngModel)]="novoPaciente.dataNascimento" required>
+          </div>
+          <div class="form-group">
+            <label for="cpf" class="form-label">CPF:</label>
+            <input name="cpf" type="text" class="form-control" id="cpfEd" [(ngModel)]="novoPaciente.cpf" required>
+          </div>
+          <div class="form-group">
+            <label for="sexo" class="form-label">Sexo:</label>
+            <select id="sexoAd" class="form-control form-select" [(ngModel)]="novoPaciente.sexo" name="sexo" required>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="endereco" class="form-label">Endereço:</label>
+            <input name="endereco" type="text" class="form-control" id="enderecoEd" [(ngModel)]="novoPaciente.endereco" required>
+          </div>
+          <div class="form-group">
+            <label for="cidade" class="form-label">Cidade:</label>
+            <input name="cidade" type="text" class="form-control" id="cidadeEd" [(ngModel)]="novoPaciente.cidade" required>
+          </div>
+          <div class="form-group">
+            <label for="estado" class="form-label">Estado:</label>
+            <input name="estado" type="text" class="form-control" id="estadoEd" [(ngModel)]="novoPaciente.estado" required>
+          </div>
+          <div class="form-group">
+            <label for="telefone" class="form-label">Telefone:</label>
+            <input name="telefone" type="text" class="form-control" id="telefoneEd" [(ngModel)]="novoPaciente.telefone" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" (click)="editarPaciente()">Editar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Excluir Paciente -->
+<div class="modal fade" id="modalExcluirPaciente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir Paciente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir o paciente selecionado?</p>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="excluirPaciente(novoPaciente)">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
